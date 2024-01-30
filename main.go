@@ -39,12 +39,9 @@ func calculator(s string) string {
 	arrayNumbers := strings.Split(s, operand)
 
 	if len(arrayNumbers) == 2 && len(operandMap) > 2 { // Если будет больше одного операнда и чисел более 2-х - panic()
-		fmt.Println(arrayNumbers[0], arrayNumbers[1])
 
 		isRomanOne := isRomanNumeral(arrayNumbers[0]) // Проверка Арабская цифра или Римская - Паника если они разные в массиве
 		isRomanTwo := isRomanNumeral(arrayNumbers[1])
-
-		fmt.Println(isRomanOne, isRomanTwo)
 
 		if isRomanOne && isRomanTwo {
 			result = calculateRoman(arrayNumbers, operand)
@@ -168,8 +165,11 @@ func calculateRoman(roman []string, operand string) string {
 		"C":        100,
 	}
 
-	numOne := romanNumbers[roman[0]]
-	numTwo := romanNumbers[roman[1]]
+	romanOne := strings.ToUpper(roman[0])
+	romanTwo := strings.ToUpper(roman[1])
+
+	numOne := romanNumbers[romanOne]
+	numTwo := romanNumbers[romanTwo]
 
 	if numOne < numTwo && operand == "-" {
 		panic("Roman result cant be negative")
@@ -221,6 +221,7 @@ func calculateArabic(arabic []string, operand string) string {
 }
 
 func isRomanNumeral(s string) bool {
+	upperString := strings.ToUpper(s)
 	romanRegex := regexp.MustCompile(`^(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$`)
-	return romanRegex.MatchString(s)
+	return romanRegex.MatchString(upperString)
 }
